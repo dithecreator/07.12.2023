@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+// Задание 1
+// Реализовать класс ExtendedDate, унаследовав его от стандартного класса Date и добавив следующие возможности:
+//  метод для вывода даты (числа и месяца) текстом;
+//  метод для проверки – это прошедшая дата или будущая (если
+// прошедшая, то метод возвращает false; если будущая или текущая, то
+// true);
+//  метод для проверки – високосный год или нет;
+//  метод, возвращающий следующую дату.
+// Создать объект класса ExtendedDate и вывести на экран результаты работы новых методов.
+
+
+
+
+
+class ExtendedDate extends Date{
+  
+     print(){
+        let months = [
+            "Январь", "Февраль", "Март",
+            "Апрель", "Май", "Июнь",
+            "Июль", "Август", "Сентябрь",
+            "Октябрь", "Ноябрь", "Декабрь"
+        ];
+
+        let day = this.getDate();
+        let month = months[this.getMonth()];
+        let year = this.getFullYear();
+        document.write(`${day} ${month} ${year}`);
+    }
+
+
+    check(day, month, year){
+let currentDate = new Date();
+let userDate = new Date();
+userDate.setDate(day);
+userDate.setMonth(month);
+userDate.setYear(year);
+if(currentDate.getTime() > userDate.getTime()){
+    document.write("<br> false");
+    }
+
+
+if(currentDate.getTime() < userDate.getTime() || currentDate.getTime() === userDate.getTime()){
+    document.write("<br> true");
+    }
+
+};
+
+
+leapYear1(year){
+      if(year % 4 === 0 && year % 100 !== 0 || year % 400 === 0){
+        document.write("<br>"  + year + " год является високосным");
+      }
+      else{
+        document.write("<br>" + year + " год не является високосным");
+      }
+};
+
+
+
+leapYear(){
+    let year = this.getFullYear();
+      if(year % 4 === 0 && year % 100 !== 0 || year % 400 === 0){
+document.write("<br>"  + year + " год является високосным");
+      }
+      else{
+        document.write("<br>" + year + " год не является високосным");
+      }
+};
+
+nextDate(){
+    let nextDate = new Date();
+    nextDate.setDate(nextDate.getDate() + 1);
+    document.write("<br>" + "следующая дата: " + nextDate);
+};
+
+}
+
+
+
+
+
+let date = new ExtendedDate();
+date.print();
+date.check(11, 11, 2024);
+date.leapYear1(2024);
+date.leapYear();
+date.nextDate();
+
+
+// Задание 2
+// Реализовать класс, описывающий простой маркер. В классе должны быть следующие компоненты:
+//  поле, которое хранит цвет маркера;
+//  поле, которое хранит количество чернил в маркере (в процентах);
+//  метод для печати (метод принимает строку и выводит текст
+// соответствующим цветом; текст выводится до тех пор, пока в маркере есть чернила; один не пробельный символ – это 0,5% чернил в маркере).
+// Реализовать класс, описывающий заправляющийся маркер, унаследовав его от простого маркера и добавив метод для заправки маркера.
+// Продемонстрировать работу написанных методов.
+
+class Marker{
+    #color = '#';
+    #inks = 0;
+constructor(color, inks){
+    this.#color = color;
+    this.#inks = inks;
+
+    if(color.length !== 6){
+    document.write("ошибка");
+    }
+
+};
+
+
+print(string){
+let i = 0;
+while(this.#inks !== 0){
+    if(string[i] !== ' '){
+            document.write(`<span style="color: #${this.#color}">${string[i]}</span>`);
+    }
+    i++;
+this.#inks -= 0.5;
+}
+if (this.#inks === 0) {
+            document.write("<br> Маркер пуст. Пожалуйста, заполните маркер.");
+        }
+};
+
+
+getInks(){
+    return this.#inks;
+}
+
+setInks(inks){
+    this.#inks = inks;
+}
+
+}
+
+
+let marker = new Marker('ff0000', 5);
+document.write("<br>");
+marker.print("sdgfsdgsfgsddsg");
+
+
+class Refill extends Marker{
+
+    refill(newValueOfInks){
+this.setInks(newValueOfInks);
+    };
+
+
+    print(string) {
+        if (this.getInks() === 0) {
+            document.write("<br> Маркер пуст. Пожалуйста, заполните маркер.");
+            return;
+        }
+        super.print(string);
+    };
+
+
+
+}
+
+
+let refillMarker = new Refill('00ff00');
+document.write("<br>");
+refillMarker.refill(6);
+refillMarker.print("Hello, Refill!");
+refillMarker.refill(5);
+document.write("<br>");
+refillMarker.print("Hello, Refill Again!");
+
+
+    </script>
+    
+</body>
+</html>
